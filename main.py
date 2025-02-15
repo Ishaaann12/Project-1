@@ -10,6 +10,8 @@ from tasks import count_wednesdays , format_markdown, sort_contacts, write_recen
 from prevent_file_deletion import PreventFileDeletionMiddleware
 app.add_middleware(PreventFileDeletionMiddleware)
 
+from enforce_data_access import EnforceDataAccessMiddleware
+app.add_middleware(EnforceDataAccessMiddleware)
 # from enforce_data_access import EnforceDataAccessMiddleware
 # app.add_middleware(EnforceDataAccessMiddleware)
 # # Security constraints (B1 & B2)
