@@ -1,0 +1,49 @@
+from sentence_transformers import SentenceTransformer, util
+import os
+
+def safe_path(filename):
+    # Assuming the file is in the current working directory
+    return os.path.join(os.getcwd(), filename)
+
+def find_most_similar_comments():
+    input_file = safe_path("comments.txt")
+    output_file = safe_path("comments-similar.txt")
+
+    # Load comments from file
+    with open(input_file, "r", encoding="utf-8") as f:
+        comments = [line.strip() for line in f.readlines() if line.strip()]
+
+    if len(comments) < 2:
+        return "Not enough comments to compare."
+
+    # Load the sentence transformer model
+    model = SentenceTransformer("all-MiniLM-L6-v2")
+
+    # Compute embeddings for each comment
+    embeddings = model.encode(comments, convert_to_tensor=True)
+
+    # Find the most similar pair
+    similarity_matrix = util.pytorch_cos_sim(embeddings, embeddings)
+    max_score = -1
+    most_similar_pair = ("", "")
+
+    for i in range(len(comments)):
+        for j in range(i + 1, len(comments)):
+            score = similarity_matrix[i][j].item()
+            print(f"Similarity between Comment {i} and Comment {j}: {score}")  # Debugging line
+            if score > max_score:
+                max_score = score
+                most_similar_pair = (comments[i], comments[j])
+
+    # Write the most similar comments to file
+    with open(output_file, "w", encoding="utf-8") as f:
+        f.write(most_similar_pair[0] + "\n")
+        f.write(most_similar_pair[1] + "\n")
+
+    return f"Most similar comments written to {output_file}: {most_similar_pair}"
+
+# Example usage:
+result = find_most_similar_comments()
+print(result)
+
+this is for A8, if needed in the end.......
