@@ -5,28 +5,19 @@ import requests
 import sqlite3
 import duckdb
 import json
-import shutil
 import markdown
 from PIL import Image
 import speech_recognition as sr
-from bs4 import BeautifulSoup
 from dateutil import parser
-from git import Repo
 import pandas as pd
 import os
-import json
 import glob
-import datetime
-import openai
-import pytesseract
 from PIL import Image
-from sentence_transformers import SentenceTransformer, util
+from sentence_transformers import util
 import base64
-import re
 from llm_helper import query_llm
 from utils import write_file, safe_path
 import torch
-import csv
 
 # Define the safe path function
 def safe_path(filename):
