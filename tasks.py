@@ -617,7 +617,7 @@ def format_markdown(task_description):
 def sort_contacts(task_description):
     matched_task = query_llm(f"Identify the correct task for: {task_description}")
 
-    if "sort" in matched_task.lower() and "contacts" in matched_task.lower():
+    if "sort" in matched_task.lower() or "contacts" in matched_task.lower():
         input_file = safe_path("contacts.json")
         output_file = safe_path("contacts-sorted.json")
 
@@ -690,6 +690,7 @@ def count_wednesdays(task_description):
     day_map = {"sunday": 6, "monday": 0, "tuesday": 1, "wednesday": 2, "thursday": 3, "friday": 4, "saturday": 5}
     input_file = safe_path("dates.txt")
     output_file = safe_path("dates-wednesdays.txt")
+
 
     count = 0
     try:

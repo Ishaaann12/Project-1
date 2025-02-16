@@ -6,12 +6,16 @@ import json
 app = FastAPI()
 from llm_helper import query_llm_for_task
 from tasks import count_wednesdays , format_markdown, sort_contacts, write_recent_log, index_markdown, extract_email_sender, extract_credit_card_number, find_similar_comments, calculate_gold_sales, fetch_and_save_api_data, clone_and_commit_to_github, run_sql_query, compress_or_resize_image, convert_markdown_to_html, read_csv_from_upload
+from fastapi.responses import FileResponse, Response
+@app.get("/favicon.ico")
+async def favicon():
+    return Response(status_code=204)
 
 from prevent_file_deletion import PreventFileDeletionMiddleware
 app.add_middleware(PreventFileDeletionMiddleware)
 
-from enforce_data_access import EnforceDataAccessMiddleware
-app.add_middleware(EnforceDataAccessMiddleware)
+# from enforce_data_access import EnforceDataAccessMiddleware
+# app.add_middleware(EnforceDataAccessMiddleware)
 # from enforce_data_access import EnforceDataAccessMiddleware
 # app.add_middleware(EnforceDataAccessMiddleware)
 # # Security constraints (B1 & B2)

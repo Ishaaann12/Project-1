@@ -1,15 +1,15 @@
 FROM python:3.11.9-slim
 ARG AIPROXY_TOKEN
 ENV AIPROXY_TOKEN=${AIPROXY_TOKEN}
-#COPY . /app
 WORKDIR /app
 COPY requirements.txt .
-
 COPY . .
+RUN pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir uvicorn
+ENV PATH="/usr/local/bin:$PATH"
 EXPOSE 8000
-
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-RUN pip install --no-cache-dir -r requirements.txt
+
 # # Use slim image to reduce size and build time
 # # Use slim image for smaller size and faster builds
 # FROM python:3.11-slim AS base
